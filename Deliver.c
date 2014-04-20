@@ -30,8 +30,8 @@ main()
                 if(delivery.dish_no[0] <= 0)
                         break;
                 printf("\nOrder completed : %d\n", delivery.identity);
-                receipt();
-                sys("clear");
+                receipt(delivery.dish_no, delivery.quant, delivery.identity);
+                system("clear");
         }
         return 0;
 }
