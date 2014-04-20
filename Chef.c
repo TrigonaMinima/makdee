@@ -27,6 +27,7 @@ int main()
 
         while(1)
         {
+                system("clear");
                 // Order received to be prepeared
                 if(msgrcv(msgid, (void *)&order, size, msg, 0) == -1)
                 {
@@ -38,8 +39,7 @@ int main()
                 printf("\nOrder being prepeared for : %d\n", order.identity);
                 while(order.dish_no[j] > 0)
                 {
-                        printf("%d - ", order.dish_no[j]);
-                        printf("\nQuantity%d\n", order.quant[j]);
+                        printf("%s - %d\n", arr[order.dish_no[j]], order.quant[j]);
                         j++;
                 }
                 sleep(15);
@@ -53,7 +53,6 @@ int main()
                 // count++;
                 if(order.dish_no[0] <= 0)
                         break;
-                system("clear");
         }
 
         if(msgctl(msgid, IPC_RMID, 0)==-1)

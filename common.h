@@ -36,20 +36,20 @@ menu()
         }
 }
 
-void receipt(int dish_no[],int quant[],int id)
+void receipt(int dish_no[], int quant[], int id)
 {
-        int j=0, sum;
-        // printf("----------------------------------------------------------------------------------------\n");
+        int j=0, sum=0;
+        // printf("------------------------------------------------------------\n");
         printf("Order ID : %d\n", id);
-        printf("\nOrder details : \n");
-        printf("#   Eatable\t Quantity\t Cost\n");
+        printf("Order details : \n");
+        printf("##   Eatable\t Quantity\t Cost\n");
         while(dish_no[j] > 0)
         {
-                printf("%d %s \t %d\t %d", j, arr[dish_no[j]], quant[j], (quant[j]*price[dish_no[j]]));
+                printf("%s \t %d\t %d", arr[dish_no[j]], quant[j], (quant[j]*price[dish_no[j]]));
                 sum+=(quant[j]*price[dish_no[j]]);
                 j++;
         }
-        printf("\n--------------------------------------------------------------------------------------\n");
+        printf("\n------------------------------------------------------------\n");
         printf("Sum Total : %d\n", sum);
 }
 

@@ -22,6 +22,7 @@ int main()
 
         while(1)
         {
+                system("clear");
                 ch='y';
                 order.my_msg_type = 1;
                 zero(order.dish_no);
@@ -48,7 +49,6 @@ int main()
                 order.identity += 1;
                 if(order.dish_no[0] <= 0)
                         break;
-                system("clear");
         }
         return 0;
 }

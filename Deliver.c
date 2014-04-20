@@ -22,6 +22,7 @@ main()
 
         while(1)
         {
+                system("clear");
                 if(msgrcv(msgid, (void *)&delivery, size, msg, 0) == -1)
                 {
                         printf("\nmsgrcv() Failure!!!");
@@ -29,9 +30,9 @@ main()
                 }
                 if(delivery.dish_no[0] <= 0)
                         break;
-                printf("\nOrder completed : %d\n", delivery.identity);
+                printf("\nOrder completed : %d\n\n", delivery.identity);
                 receipt(delivery.dish_no, delivery.quant, delivery.identity);
-                system("clear");
+                sleep(5);
         }
         return 0;
 }
