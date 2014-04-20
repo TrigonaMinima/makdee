@@ -22,8 +22,8 @@ int main()
 
         while(1)
         {
-                system("clear");
                 ch='y';
+                order.count=0;
                 order.my_msg_type = 1;
                 zero(order.dish_no);
                 zero(order.quant);
@@ -31,10 +31,10 @@ int main()
                 while(ch == 'y' || ch == 'Y')
                 {
                         printf("\nPlease enter the serial number of the dish you want to order : ");
-                        scanf("%d", &(order.dish_no[i]));
+                        scanf("%d", &(order.dish_no[order.count]));
                         printf("Please enter the quantity of the dish you want to order : ");
-                        scanf("%d", &(order.quant[i]));
-                        i++;
+                        scanf("%d", &(order.quant[order.count]));
+                        order.count++;
                         printf("Do you want to order more ? (y/n) : ");
                         scanf("%s", &ch);
                 }
@@ -49,6 +49,7 @@ int main()
                 order.identity += 1;
                 if(order.dish_no[0] <= 0)
                         break;
+                system("clear");
         }
         return 0;
 }
