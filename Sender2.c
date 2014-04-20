@@ -6,10 +6,10 @@
 
 int main()
 {
-        int msgid, norder=0, i=0, j=0, size;
+        int msgid, i=0, j=0, size;
         char ch;
         struct mcd order;
-        order.identity = norder+1+75;
+        order.identity = 75;
         size = sizeof(struct mcd) - sizeof(long int);
 
         // setting up the msg queue
@@ -37,7 +37,6 @@ int main()
                         printf("Do you want to order more ? (y/n) : ");
                         scanf("%s", &ch);
                 }
-                norder++;
                 receipt();
 
                 if(msgsnd(msgid, (void *)&order, size, 0) == -1)
@@ -47,7 +46,7 @@ int main()
                 }
                 i=0;
                 order.identity += 1;
-                if(norder == 2)
+                if(order.dish_no[0] <= 0)
                         break;
                 sys("clear");
         }

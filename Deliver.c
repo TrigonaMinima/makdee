@@ -30,13 +30,7 @@ main()
                 if(delivery.dish_no[0] <= 0)
                         break;
                 printf("\nOrder completed : %d\n", delivery.identity);
-                j=0;
-                while(delivery.dish_no[j] > 0)
-                {
-                        printf("%d - ", delivery.dish_no[j]);
-                        printf("Rs %d\n", delivery.quant[j]);
-                        j++;
-                }
+                receipt();
                 sys("clear");
         }
         return 0;
