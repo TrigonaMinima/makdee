@@ -1,98 +1,59 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/msg.h>
 
-#include<sys/msg.h>
-
-
-struct mcd
-{
-        long int my_msg_type;
-        int dish_no[10];
-        int quant[10];
-        char identity;
-        struct mcd *next;
-} *head=NULL, *order=NULL, *end=NULL;
-
-struct mcd *get_node()
-{
-        struct mcd *p;
-        int i=0;
-        p=(struct mcd*)malloc(sizeof(struct mcd));
-        p->next = NULL;
-        for(i=0;i<10;i++)
-        {
-        	p->dish_no[i]=0;
-        	p->quant[i]=0;
-        } 
-        return p;
-}
+# include "common.h"
 
 int main()
 {
-        int msgid, norder=0, i=0, j=0,k=1;
+        int msgid, norder=0, i=0, j=0, size;
         char ch;
-        struct mcd* try;
-        while(k)
+        struct mcd order;
+        order.identity = norder+1+25;
+        size = sizeof(struct mcd) - sizeof(long int);
+
+        // setting up the msg queue
+        msgid=msgget((key_t)1234, 0666 | IPC_CREAT);
+        if(msgid == -1)
+        {
+                printf("msgid() Failed!!!");
+                exit(0);
+        }
+
+        while(1)
         {
                 ch='y';
-                order=get_node();
+                order.my_msg_type = 1;
                 while(ch == 'y' || ch == 'Y')
                 {
                         printf("\nPlease enter the serial number of the dish you want to order : ");
-                        scanf("%d", &(order->dish_no[i]));
+                        scanf("%d", &(order.dish_no[i]));
                         printf("Please enter the quantity of the dish you want to order : ");
-                        scanf("%d", &(order->quant[i]));
+                        scanf("%d", &(order.quant[i]));
                         i++;
                         printf("Do you want to order more ? (y/n) : ");
                         scanf("%s", &ch);
                 }
-                if(head == NULL)
-                {
-                        head=order;
-                        order->my_msg_type=1;
-                        end=order;
-                }
-                else
-                {
-                        end->next=order;
-                        end=order;
-                }
                 norder++;
-                printf("%d\n",norder);
-                try=get_node();
-                try=head;
-                
-                while(try!=NULL)
+                printf("Order # %d\n", norder);
+                j=0;
+                while(j<i)
                 {
-                	j=0;
-                	while(try->dish_no[j]!=0)
-                	{
-                       		printf("%d - ", try->dish_no[j]);
-                        	printf("%d\n", try->quant[j]);
-                        	j++;
-                        }
-                        try=try->next;
-                        printf("\n");
+                        printf("%d - ", order.dish_no[j]);
+                        printf("Rs %d\n", order.quant[j]);
+                        j++;
                 }
-                
-                msgid=msgget((key_t)1234, 0666 | IPC_CREAT);
-	
-		if(msgid == -1)
-		{
-			printf("Failed!!!");
-			exit(0);
-		}
-                
-                if(msgsnd(msgid, (void *)&head, (sizeof(struct mcd)-4), 0) ==-1)
-		{
-			printf("\nFailure!!!!");
-			exit(0);
-		}
-		
-                if(norder == 2)
-                        k=0;
+                printf("shivamsalshkal\n");
+                if(msgsnd(msgid, (void *)&order, size, 0) == -1)
+                {
+                        printf("\nmsgsnd() Failure!!!!");
+                        exit(0);
+                }
                 i=0;
+                order.identity += 1;
+                if(norder == 2)
+                        break;
         }
         return 0;
 }

@@ -1,70 +1,49 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<sys/msg.h>
-#include<unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/msg.h>
 
-struct mcd
-{
-        long int my_msg_type;
-        int dish_no[10];
-        int quant[10];
-        char identity;
-        struct mcd *next;
-}*head;
-
-struct mcd *get_node()
-{
-        struct mcd *p;
-        int i=0;
-        p=(struct mcd*)malloc(sizeof(struct mcd));
-        p->next = NULL;
-        /*for(i=0;i<10;i++)
-        {
-        	p->dish_no[i]=0;
-        	p->quant[i]=0;
-        } */
-        return p;
-}
+# include "common.h"
 
 int main()
 {
-	int running=1;
-	int msgid,i=0;;
-	long int msg=0;
-	struct mcd* try;
-	try=NULL;
-	
-	msgid=msgget((key_t)1234, 0666 | IPC_CREAT);
-	
-	if(msgid == -1)
-	{
-		printf("Failed!!!");
-		exit(0);
-	}
-		
-	while(running)
-	{
-		if(msgrcv(msgid, (void *)&head,(sizeof(struct mcd)-4),msg,0) == -1)
-		{
-			printf("\nFailure!!!");
-			exit(0);
-		}
-		try=get_node();
-		
-		try=head;
-		while(try->dish_no[i]!=0)
-		{
-			printf("\n%d - ",try->dish_no[i]);
-			printf("%d\n",try->quant[i]);
-			i++;
-		}	
-		
-	}
-	
-	if(msgctl(msgid, IPC_RMID, 0)==-1)
-	{
-		printf("Failed!!!");
-		exit(0);
-	}
-	return(0);
+        int msgid, i=0, count=0, j, size;
+        long int msg=0;
+        struct mcd order;
+        size = sizeof(struct mcd) - sizeof(long int);
+
+        // setting up the msg queue
+        msgid = msgget((key_t)1234, 0666 | IPC_CREAT);
+        if(msgid == -1)
+        {
+                printf("msgid() Failed!!!");
+                exit(0);
+        }
+
+        while(1)
+        {
+                if(msgrcv(msgid, (void *)&order, size, msg, 0) == -1)
+                {
+                        printf("\nmsgrcv() Failure!!!");
+                        exit(0);
+                }
+
+                j=0;
+                while(j<i)
+                {
+                        printf("%d - ", order.dish_no[j]);
+                        printf("Rs %d\n", order.quant[j]);
+                        j++;
+                }
+                count++;
+                if (count==2)
+                        break;
+        }
+
+        if(msgctl(msgid, IPC_RMID, 0)==-1)
+        {
+                printf("Failed!!!");
+                exit(0);
+        }
+        return(0);
 }
