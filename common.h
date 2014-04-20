@@ -15,13 +15,13 @@ zero(int arr[20])
                 arr[i]=0;
 }
 
-char arr[20][20] = { "Econo-meal", "Happy Meal", "McAaloo", 
-                                "Big Mac", "Cheezeburger", "McChicken", 
-                                "McVeggie", "McEgg", "Egg McMuffin", 
-                                "Big Breakfast", "Hotcakes", "World Famous Fries", 
-                                "McCaffe Coffee", "McCaffe Latte", "Iced Tea", 
-                                "Diet Coke", "Sprite", "Straberry Sundae", 
-                                "McFlurry with Oreo", "Soft Serve Cone"};
+char arr[20][20] = { "1. Econo-meal", "2. Happy Meal", "3. McAaloo", 
+                                "4. Big Mac", "5. Cheezeburger", "6. McChicken", 
+                                "7. McVeggie", "8. McEgg Burger","9. McPaneer", 
+                                "10. Breakfast", "11. Hotcakes", "12.Famous Fries", 
+                                "13. McCaffe", "14. Choco Latte", "15. Ice Tea", 
+                                "16. Diet Coke", "17. Soft Drink", "18. HCF Sundae", 
+                                "19. McFlurry", "20. Soft Serve"};
 
 int price[20] = { 70, 100, 30, 120, 80, 60, 50, 35, 100, 50, 45, 60, 70, 70, 65, 55, 55, 95, 45, 20};
 
@@ -36,20 +36,21 @@ menu()
         }
 }
 
-void
-receipt()
+void receipt(int dish_no[],int quant[],int id)
 {
         int j=0, sum;
         // printf("----------------------------------------------------------------------------------------\n");
-        printf("Order ID : %d\n", order.identity);
-        printf("\nOrder details : \n",);
+        printf("Order ID : %d\n", id);
+        printf("\nOrder details : \n");
         printf("#   Eatable\t Quantity\t Cost\n");
-        while(delivery.dish_no[j] > 0)
+        while(dish_no[j] > 0)
         {
-                printf("%2d. %s \t %03d\t %d", j, arr[delivery.dish_no[j]], delivery.quant[j], (delivery.quant[j]*price[delivery.dish_no[j]]));
-                sum+=(delivery.quant[j]*price[delivery.dish_no[j]]);
+                printf("%d %s \t %d\t %d", j, arr[dish_no[j]], quant[j], (quant[j]*price[dish_no[j]]));
+                sum+=(quant[j]*price[dish_no[j]]);
                 j++;
         }
         printf("\n--------------------------------------------------------------------------------------\n");
         printf("Sum Total : %d\n", sum);
 }
+
+
