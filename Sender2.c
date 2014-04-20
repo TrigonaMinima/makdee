@@ -37,7 +37,7 @@ int main()
                         printf("Do you want to order more ? (y/n) : ");
                         scanf("%s", &ch);
                 }
-                receipt();
+                //receipt(order.dish_no, order.quant, order.id);
 
                 if(msgsnd(msgid, (void *)&order, size, 0) == -1)
                 {
@@ -48,7 +48,7 @@ int main()
                 order.identity += 1;
                 if(order.dish_no[0] <= 0)
                         break;
-                sys("clear");
+                system("clear");
         }
         return 0;
 }
