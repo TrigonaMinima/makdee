@@ -53,7 +53,7 @@ int main()
                 // count++;
                 if(order.dish_no[0] <= 0)
                         break;
-                //system("clear");
+                system("clear");
         }
 
         if(msgctl(msgid, IPC_RMID, 0)==-1)
