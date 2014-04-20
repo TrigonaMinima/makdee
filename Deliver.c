@@ -1,7 +1,6 @@
 # include <stdio.h>
-# include <sys/msg.h>
 # include <stdlib.h>
-
+# include <sys/msg.h>
 
 # include "common.h"
 
@@ -14,7 +13,7 @@ main()
         size = sizeof(struct mcd) - sizeof(long int);
 
         // setting up the msg queue
-        msgid = msgget((key_t)1234, 0666 | IPC_CREAT);
+        msgid = msgget((key_t)1243, 0666 | IPC_CREAT);
         if(msgid == -1)
         {
                 printf("msgid() Failed!!!");
@@ -28,9 +27,9 @@ main()
                         printf("\nmsgrcv() Failure!!!");
                         exit(0);
                 }
-                if(delivery.identity <= 0)
+                if(delivery.dish_no[0] <= 0)
                         break;
-                printf("Order completed : %d\n", delivery.identity);
+                printf("\nOrder completed : %d\n", delivery.identity);
                 j=0;
                 while(delivery.dish_no[j] > 0)
                 {
@@ -38,6 +37,7 @@ main()
                         printf("Rs %d\n", delivery.quant[j]);
                         j++;
                 }
+                sys("clear");
         }
         return 0;
 }

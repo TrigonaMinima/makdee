@@ -1,6 +1,5 @@
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <sys/msg.h>
 
 # include "common.h"
@@ -27,6 +26,7 @@ int main()
                 order.my_msg_type = 1;
                 zero(order.dish_no);
                 zero(order.quant);
+                menu();
                 while(ch == 'y' || ch == 'Y')
                 {
                         printf("\nPlease enter the serial number of the dish you want to order : ");
@@ -38,15 +38,8 @@ int main()
                         scanf("%s", &ch);
                 }
                 norder++;
-                printf("Order # %d\n", norder);
-                // j=0;
-                // while(j<i)
-                // {
-                //         printf("%d - ", order.dish_no[j]);
-                //         printf("Rs %d\n", order.quant[j]);
-                //         j++;
-                // }
-                // printf("shivamsalshkal\n");
+                receipt();
+
                 if(msgsnd(msgid, (void *)&order, size, 0) == -1)
                 {
                         printf("\nmsgsnd() Failure!!!!");
@@ -56,6 +49,7 @@ int main()
                 order.identity += 1;
                 if(norder == 2)
                         break;
+                sys("clear");
         }
         return 0;
 }
