@@ -5,6 +5,7 @@ struct mcd
         int dish_no[20];
         int quant[20];
         int identity;
+        int count;
 };
 
 void
@@ -15,11 +16,11 @@ zero(int arr[20])
                 arr[i]=0;
 }
 
-char arr[20][20] = { "1. Econo-meal", "2. Happy Meal", "3. McAaloo", 
-                                "4. Big Mac", "5. Cheezeburger", "6. McChicken", 
-                                "7. McVeggie", "8. McEgg Burger","9. McPaneer", 
-                                "10. Breakfast", "11. Hotcakes", "12.Famous Fries", 
-                                "13. McCaffe", "14. Choco Latte", "15. Ice Tea", 
+char arr[20][20] = { "01. Econo-meal", "02. Happy Meal", "03. McAaloo", 
+                                "04. Big Mac", "05. Cheezesub", "06. McChicken", 
+                                "07. McVeggie", "08. McEgg","09. McPaneer", 
+                                "10. Breakfast", "11. Hotcakes", "12.Fries", 
+                                "13. McCaffe", "14.Latte", "15. Ice Tea", 
                                 "16. Diet Coke", "17. Soft Drink", "18. HCF Sundae", 
                                 "19. McFlurry", "20. Soft Serve"};
 
@@ -36,20 +37,20 @@ menu()
         }
 }
 
-void receipt(int dish_no[], int quant[], int id)
+void receipt(int dish_no[],int quant[],int id)
 {
         int j=0, sum=0;
-        // printf("------------------------------------------------------------\n");
+        // printf("----------------------------------------------------------------------------------------\n");
         printf("Order ID : %d\n", id);
-        printf("Order details : \n");
-        printf("##   Eatable\t Quantity\t Cost\n");
+        printf("\nOrder details : \n");
+        printf("Eatable\t\t Quantity\t Cost\n");
         while(dish_no[j] > 0)
         {
-                printf("%s \t %d\t %d", arr[dish_no[j]], quant[j], (quant[j]*price[dish_no[j]]));
+                printf("%s \t %d\t\t %d\n", arr[dish_no[j]], quant[j], (quant[j]*price[dish_no[j]]));
                 sum+=(quant[j]*price[dish_no[j]]);
                 j++;
         }
-        printf("\n------------------------------------------------------------\n");
+        printf("\n--------------------------------------------------------------------------------------\n");
         printf("Sum Total : %d\n", sum);
 }
 
