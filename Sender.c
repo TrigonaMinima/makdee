@@ -25,6 +25,8 @@ int main()
         {
                 ch='y';
                 order.my_msg_type = 1;
+                zero(order.dish_no);
+                zero(order.quant);
                 while(ch == 'y' || ch == 'Y')
                 {
                         printf("\nPlease enter the serial number of the dish you want to order : ");
@@ -37,14 +39,14 @@ int main()
                 }
                 norder++;
                 printf("Order # %d\n", norder);
-                j=0;
-                while(j<i)
-                {
-                        printf("%d - ", order.dish_no[j]);
-                        printf("Rs %d\n", order.quant[j]);
-                        j++;
-                }
-                printf("shivamsalshkal\n");
+                // j=0;
+                // while(j<i)
+                // {
+                //         printf("%d - ", order.dish_no[j]);
+                //         printf("Rs %d\n", order.quant[j]);
+                //         j++;
+                // }
+                // printf("shivamsalshkal\n");
                 if(msgsnd(msgid, (void *)&order, size, 0) == -1)
                 {
                         printf("\nmsgsnd() Failure!!!!");

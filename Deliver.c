@@ -1,15 +1,16 @@
 # include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <sys/msg.h>
+# include <stdlib.h>
+
 
 # include "common.h"
 
-int main()
+int
+main()
 {
-        int msgid, i=0, count=0, j, size;
+        int msgid, j, size;
         long int msg=0;
-        struct mcd order;
+        struct mcd delivery;
         size = sizeof(struct mcd) - sizeof(long int);
 
         // setting up the msg queue
@@ -22,28 +23,21 @@ int main()
 
         while(1)
         {
-                if(msgrcv(msgid, (void *)&order, size, msg, 0) == -1)
+                if(msgrcv(msgid, (void *)&delivery, size, msg, 0) == -1)
                 {
                         printf("\nmsgrcv() Failure!!!");
                         exit(0);
                 }
-
+                if(delivery.identity <= 0)
+                        break;
+                printf("Order completed : %d\n", delivery.identity);
                 j=0;
-                while(j<i)
+                while(delivery.dish_no[j] > 0)
                 {
-                        printf("%d - ", order.dish_no[j]);
-                        printf("Rs %d\n", order.quant[j]);
+                        printf("%d - ", delivery.dish_no[j]);
+                        printf("Rs %d\n", delivery.quant[j]);
                         j++;
                 }
-                count++;
-                if (count==2)
-                        break;
         }
-
-        if(msgctl(msgid, IPC_RMID, 0)==-1)
-        {
-                printf("Failed!!!");
-                exit(0);
-        }
-        return(0);
+        return 0;
 }
