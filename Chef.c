@@ -39,10 +39,10 @@ int main()
                 while(order.dish_no[j] > 0)
                 {
                         printf("%d - ", order.dish_no[j]);
-                        printf("Rs %d\n", order.quant[j]);
+                        printf("\nQuantity%d\n", order.quant[j]);
                         j++;
                 }
-                sleep(2);
+                sleep(15);
 
                 // Order sent to be delivered.
                 if(msgsnd(msgid1, (void *)&order, size, 0) == -1)
@@ -53,7 +53,7 @@ int main()
                 // count++;
                 if(order.dish_no[0] <= 0)
                         break;
-                sys("clear");
+                system("clear");
         }
 
         if(msgctl(msgid, IPC_RMID, 0)==-1)
